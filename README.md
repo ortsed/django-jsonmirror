@@ -1,4 +1,4 @@
-django-wordiff
-==============
+django-jsonmirror
+=================
 
-Uses an n-gram search to find similar files
+Small app for mirroring JSON content to a local DB
