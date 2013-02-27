@@ -12,6 +12,9 @@ class JSON_Archive_Set(models.Model):
 	url = models.URLField("Feed URL", help_text="URL of JSON feed", unique=True)
 	
 	date_updated = models.DateTimeField("Last updated", null=True, blank=True)
+	
+	def __unicode__(self):
+		return self.name
 
 
 class JSON_Archive(models.Model):
@@ -27,4 +30,9 @@ class JSON_Archive(models.Model):
 	content = models.TextField(blank=True, null=False)
 	
 	unique_together=("external_id", "set")
+	
+	parsed = models.BooleanField(default=False)
+	
+	def __unicode__(self):
+		return u"%s - %s" % (self.set.name, self.external_id)
 	
