@@ -24,11 +24,14 @@ def update_json_feed(json_archive_set):
 	if isinstance( contents_parsed, list ):
 		for content in contents_parsed:
 			if isinstance(content, dict):
-				json_archive = JSON_Archive()
-				json_archive.set = json_archive_set
-				json_archive.external_id = content[JSON_OBJECT_ID_FIELD]
-				json_archive.content = json.dumps(content)
-				json_archive.save()
+				try:
+					archive = JSON_Archive.objects.get(external_id=content[JSON_OBJECT_ID_FIELD])
+				except JSON_Archive.DoesNotExist:
+					json_archive = JSON_Archive()
+					json_archive.set = json_archive_set
+					json_archive.external_id = content[JSON_OBJECT_ID_FIELD]
+					json_archive.content = json.dumps(content)
+					json_archive.save()
 
 	
 	json_archive_set.date_updated = datetime.now()
